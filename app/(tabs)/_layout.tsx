@@ -14,30 +14,52 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarItemStyle: { marginTop: 20 },
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].background,
+        tabBarInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
+        tabBarStyle: [Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect
             position: 'absolute',
           },
           default: {},
-        }),
+        }), {
+          height: 80,
+          overflow: 'hidden',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          backgroundColor: Colors[colorScheme ?? 'light'].tint,
+        }],
       }}>
       <Tabs.Screen
-        name="index"
+        name="(index)"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: '',
+          tabBarIcon: ({ color }) => <IconSymbol size={30} name="building" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="calendario"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: '',
+          tabBarIcon: ({ color }) => <IconSymbol size={30} name="calendar" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="tabela"
+        options={{
+          title: '',
+          tabBarIcon: ({ color }) => <IconSymbol size={30} name="table" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="conta"
+        options={{
+          title: '',
+          tabBarIcon: ({ color }) => <IconSymbol size={30} name="person.fill" color={color} />,
         }}
       />
     </Tabs>

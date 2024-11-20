@@ -6,7 +6,10 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
+import FormProvider from "@/app/context/FormContext";
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { Colors } from '@/constants/Colors';
+import { Appearance } from 'react-native';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -14,7 +17,9 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    Jura: require('../assets/fonts/Jura-Regular.ttf'),
+    JuraBold: require('../assets/fonts/Jura-Bold.ttf'),
+    JuraSemiBold: require('../assets/fonts/Jura-SemiBold.ttf'),
   });
 
   useEffect(() => {
@@ -27,13 +32,23 @@ export default function RootLayout() {
     return null;
   }
 
+  var Dark = DarkTheme;
+  var Default = DefaultTheme;
+
+  Dark.colors.background = Colors.dark.background;
+  Default.colors.background = Colors.light.background;
+
+  Appearance.setColorScheme("light")
+
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
+    <ThemeProvider value={colorScheme === 'dark' ? Dark : Default}>
+      <FormProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="auto" />
+      </FormProvider>
     </ThemeProvider>
   );
 }

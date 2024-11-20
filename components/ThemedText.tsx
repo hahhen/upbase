@@ -1,11 +1,12 @@
 import { Text, type TextProps, StyleSheet } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { Colors } from '@/constants/Colors';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link' | 'small';
 };
 
 export function ThemedText({
@@ -20,7 +21,8 @@ export function ThemedText({
   return (
     <Text
       style={[
-        { color },
+        { fontFamily: 'Jura', color: Colors.light.text },
+        type === 'small' ? styles.small : undefined,
         type === 'default' ? styles.default : undefined,
         type === 'title' ? styles.title : undefined,
         type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
@@ -38,6 +40,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
   },
+  small: {
+    fontSize: 12,
+  },
   defaultSemiBold: {
     fontSize: 16,
     lineHeight: 24,
@@ -45,12 +50,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
+    letterSpacing: -1,
+    fontFamily: 'JuraBold',
     lineHeight: 32,
   },
   subtitle: {
+    letterSpacing: -1,
+    fontFamily: 'JuraSemiBold',
     fontSize: 20,
-    fontWeight: 'bold',
   },
   link: {
     lineHeight: 30,
